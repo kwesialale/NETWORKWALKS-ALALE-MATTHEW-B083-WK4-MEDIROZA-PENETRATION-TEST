@@ -706,7 +706,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 ### 📅 Medium-Term (within 1–3 months)
 
 9. Replace the password-protected-PDF model with an authenticated portal enforcing per-session, per-user access control.
-10. Reduce `robots.txt` disclosures — rely on proper access control, not obscurity.
+10. Reduce `robots.txt` disclosures, rely on proper access control, not obscurity.
 11. Conduct a full data protection impact assessment covering the exposed patient health information, staff personal information, and shareholder financial data.
 12. Establish a recurring penetration test schedule (at minimum quarterly) and a documented backup-handling policy.
 
