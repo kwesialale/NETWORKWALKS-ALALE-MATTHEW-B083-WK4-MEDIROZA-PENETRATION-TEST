@@ -45,7 +45,7 @@ A complete black-box penetration test conducted against **Mediroza General Hospi
 
 The engagement simulated a real-world, unauthenticated attacker with no prior knowledge of the target's credentials, source code, or internal architecture.
 
-**Every finding in this repository was demonstrated through proof-of-concept exploitation — nothing is theoretical.**
+**Every finding in this repository was demonstrated through proof-of-concept exploitation, nothing is theoretical.**
 
 ---
 
@@ -55,7 +55,7 @@ The engagement simulated a real-world, unauthenticated attacker with no prior kn
 |-----------|-----------|
 | **M1** | Attack the website and retrieve three confidential patient PDF lab reports |
 | **M2** | Crack the encryption on all three retrieved PDF files, using more than one approach |
-| **M3** | Find the critical data exposure on the client server — employee salaries and shareholder details |
+| **M3** | Find the critical data exposure on the client server, employee salaries and shareholder details |
 | **M4** | Produce a professional penetration testing report for the client |
 
 ---
@@ -78,7 +78,7 @@ The engagement simulated a real-world, unauthenticated attacker with no prior kn
 | **M1** | Retrieve three confidential patient PDF lab reports | ✅ Complete |
 | **M2** | Crack encryption on all three retrieved PDFs | ✅ Complete |
 | **M3** | Find staff salaries and shareholder details | ✅ Complete |
-| **M4** | Write the professional pentest report | ✅ Complete |
+| **M4** | Pentesting report | ✅ Complete |
 
 ---
 
@@ -107,8 +107,8 @@ The engagement simulated a real-world, unauthenticated attacker with no prior kn
 
 | Tool | Purpose |
 |------|---------|
-| `gobuster` | Directory and file brute-forcing (blocked by Cloudflare — see Limitations) |
-| **Firefox** | Manual enumeration — browser solves Cloudflare's JS challenge automatically |
+| `gobuster` | Directory and file brute-forcing (blocked by Cloudflare, see Limitations) |
+| **Firefox** | Manual enumeration, browser solves Cloudflare's JS challenge automatically |
 | **Google Chrome** | Manual enumeration, input testing, screenshot evidence capture |
 | **Safari (macOS)** | Cross-browser verification of findings |
 
@@ -135,7 +135,7 @@ The engagement simulated a real-world, unauthenticated attacker with no prior kn
 
 ### 1. Cloudflare JavaScript Challenge Blocked Automated Tools
 
-The target sits behind a LiteSpeed web server and a Cloudflare edge layer that issues a **JavaScript challenge** to any HTTP client that cannot execute JavaScript. As a result, `gobuster` could not enumerate the site — every request without a real browser engine received the same challenge page (`One moment, please...`).
+The target sits behind a LiteSpeed web server and a Cloudflare edge layer that issues a **JavaScript challenge** to any HTTP client that cannot execute JavaScript. As a result, `gobuster` could not enumerate the site, every request without a real browser engine received the same challenge page (`One moment, please...`).
 
 The wildcard length of the challenge page kept changing on each request (12206, 12181, 12013, 12127, etc.) because the challenge contains a random token. Excluding a fixed length was not possible, and excluding status 200 filtered out every response.
 
@@ -155,7 +155,7 @@ The site exposes both a **patient login** (`/patient/login.php`) and a **staff l
 
 ---
 
-## 🕵️ Attack Path — Step by Step
+## 🕵️ Attack Path
 
 ### Phase 1 — Passive Reconnaissance
 
@@ -374,7 +374,7 @@ curl -A "Mozilla/5.0..." https://medirozahospital.com/reports/ | head -30
 |-----------|-------------|
 | `/staff/` | Directory listing — `login.php` (3 KB) |
 | `/patient/` | Directory listing — `reports/`, `download.php` (1 KB), `error_log` (243 KB), `login.php` (4 KB), `logout.php` (1 KB), `portal.php` (3 KB) |
-| `/old/` | Directory listing — `mediroza_db_backup_2019.sql` (7 KB) |
+| `/old/` | Directory listing - `mediroza_db_backup_2019.sql` (7 KB) |
 | `/patient/login.php` | Patient Portal login form |
 | `/staff/login.php` | Staff Login form |
 | `/patient/reports/` | 403 Forbidden |
@@ -398,8 +398,8 @@ curl -A "Mozilla/5.0..." https://medirozahospital.com/reports/ | head -30
 | # | Username | Password | Real result |
 |---|----------|----------|-------------|
 | 1 | `admin` | `wrongpassword` | "Invalid username or password" |
-| 2 | `testuser` | `wrongpassword` | **Identical** error — no user enumeration |
-| 3 | `test` | `x` (×5 attempts) | **Identical** error every time — no lockout, no rate limiting |
+| 2 | `testuser` | `wrongpassword` | **Identical** error, no user enumeration |
+| 3 | `test` | `x` (×5 attempts) | **Identical** error every time, no lockout, no rate limiting |
 | 4 | `'` (single quote) | `x` | Accepted by form, generic error, **no SQL error leaked** |
 
 **Findings:**
@@ -555,7 +555,7 @@ password         (?)
 1. `robots.txt` disclosed the `/old/` directory
 2. Manual enumeration of `/old/` exposed a raw directory listing
 3. The directory contained a single file: `mediroza_db_backup_2019.sql` (7 KB)
-4. The file was downloaded freely — no authentication required
+4. The file was downloaded freely, no authentication required
 
 **Real file header:**
 
@@ -580,7 +580,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 ### Phase 10 — Staff Salary and Shareholder Data Extraction (M3 Complete)
 
-**Table 1 — `staff` (30 employees) — Real extracted data:**
+**Table 1 — `staff` (30 employees), Real extracted data:**
 
 | ID | Name | Job Title | Department | Salary (ZAR/mo) |
 |----|------|-----------|------------|-----------------|
